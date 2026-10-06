@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Nothing here needs to be private, but keep crawlers out of build tooling and docs.
+Disallow: /tools/
+Disallow: /DEPLOYMENT.md
+Disallow: /README.md
+
+# Be explicit for the big crawlers so there's no ambiguity.
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://www.otehmirokoaluminum.com/sitemap.xml

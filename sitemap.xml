@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Single-page site, so one URL to start with. As you add real pages (e.g. a blog
+  at /blog/, individual service pages at /services/aluminium-windows/), add an
+  entry for each with its own <lastmod>. Priority values are only a hint.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.otehmirokoaluminum.com/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

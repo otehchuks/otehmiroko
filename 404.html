@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | Oteh Miroko Aluminum</title>
+<meta name="description" content="That page isn't here — but our aluminium and glass services, project portfolio and quote form are.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0B1D2E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1D2E'/%3E%3Cpath d='M14 46 26 18h6l12 28h-7l-2.6-6.6H23.6L21 46z' fill='%232E86C1'/%3E%3Cpath d='M27.5 34h9L32 21.5z' fill='%23EEF2F6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Page-specific layout only. Everything else reuses the site stylesheet, so
+     the 404 stays visually identical to the rest of the site automatically. -->
+<style>
+  .error-page {
+    min-height: calc(100svh - 200px);
+    display: grid;
+    place-items: center;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    text-align: center;
+  }
+  .error-page__code {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 18vw, 11rem);
+    line-height: .85;
+    font-weight: 700;
+    color: var(--silver-300);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .error-page__inner { max-width: 46rem; }
+  .error-page__links { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; margin-top: var(--space-6); }
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- Compact header: logo + a single way back, so the 404 doesn't need the full nav -->
+<header class="site-header" data-scrolled="true">
+  <div class="container header__inner">
+    <a class="brand" href="index.html" aria-label="Oteh Miroko Aluminum — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="42" height="42" role="img" focusable="false">
+          <rect x="1" y="1" width="62" height="62" rx="12" fill="#0B1D2E" stroke="#2E86C1" stroke-width="2"/>
+          <path d="M14 46 26 18h6l12 28h-7l-2.6-6.6H23.6L21 46z" fill="#2E86C1"/>
+          <path d="M27.5 34h9L32 21.5z" fill="#EEF2F6"/>
+          <rect x="44" y="18" width="6" height="28" fill="#7FB3D9" opacity=".85"/>
+        </svg>
+      </span>
+      <span class="brand__text"><strong>Oteh Miroko</strong><span>Aluminum &amp; Glassworks</span></span>
+    </a>
+    <a class="btn btn--primary" href="index.html">Back to homepage</a>
+  </div>
+</header>
+
+<main id="main" class="error-page">
+  <div class="container error-page__inner">
+    <p class="error-page__code" aria-hidden="true">404</p>
+    <h1>That panel doesn't fit this frame.</h1>
+    <p class="lede">
+      The page you were looking for has been moved, renamed or never existed.
+      Everything worth seeing is one tap away:
+    </p>
+
+    <ul class="filters" role="list" style="justify-content:center; margin-block: var(--space-6);">
+      <li><a class="btn btn--ghost" href="index.html#services">Services</a></li>
+      <li><a class="btn btn--ghost" href="index.html#projects">Projects</a></li>
+      <li><a class="btn btn--ghost" href="index.html#about">About us</a></li>
+      <li><a class="btn btn--ghost" href="index.html#blog">Insights</a></li>
+      <li><a class="btn btn--ghost" href="index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="error-page__links">
+      <a class="btn btn--primary btn--lg" href="index.html#quote">Request a quote</a>
+      <a class="btn btn--outline btn--lg" href="tel:+2348030000000"
+         style="--btn-fg: var(--navy-800); border-color: var(--silver-400);">Call 0803 000 0000</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer__bar" style="margin-top:0; border-top:0;">
+    <p>© <span id="year">2026</span> Oteh Miroko Aluminum Ltd. All rights reserved.</p>
+    <ul role="list">
+      <li><a href="index.html">Homepage</a></li>
+      <li><a href="index.html#quote">Get a quote</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // Keep the copyright year current without pulling in the full site script.
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
