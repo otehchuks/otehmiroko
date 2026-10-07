@@ -1,8 +1,8 @@
 # Oteh Miroko Aluminum — company website
 
-A fast, accessible, single-page marketing site for an aluminium and glass fabrication
-contractor: windows, doors, glass partitions, curtain walls, balustrades and custom
-fabrication.
+A fast, accessible static site for an aluminium and glass fabrication contractor:
+windows, doors, glass partitions, curtain walls, balustrades and custom fabrication.
+The marketing homepage is a single page, with separate Insights article pages.
 
 Built as **static HTML, CSS and vanilla JavaScript** — no framework, no build step, no
 runtime dependencies. You can hand the folder to any host and it works.
@@ -23,7 +23,7 @@ Live preview (local dev):   http://localhost:8080
 | Projects / Portfolio with category filter + lightbox | `#projects` |
 | Process & differentiators | `#process` |
 | Testimonials (accessible carousel) | `#testimonials` |
-| Blog / Insights (3 placeholder posts) | `#blog` |
+| Blog / Insights (3 linked articles + listing page) | `#blog`, `insights/` |
 | Contact with details + consent-gated embedded map | `#contact` |
 | Quote request form (validation, file upload, honeypot) | `#quote` |
 | Sticky header, scroll progress, scroll-spy nav | `js/main.js` (modules 02–03) |
@@ -39,10 +39,13 @@ smooth scrolling that respects `prefers-reduced-motion`.
 
 ```
 oteh-miroko-aluminum/
-├── index.html              Single-page site (semantic, SEO + schema.org ready)
+├── index.html              Marketing homepage (semantic, SEO + schema.org ready)
+├── insights/                Listing page + three linked article pages
+├── privacy.html            Draft privacy notice (noindex until approved)
+├── terms.html              Draft terms page (noindex until approved)
 ├── 404.html                Branded not-found page (self-contained)
 ├── robots.txt              Crawl rules + sitemap pointer
-├── sitemap.xml             Single-URL sitemap (expand when you add real pages)
+├── sitemap.xml             Homepage + Insights URLs
 ├── css/
 │   └── styles.css          Design tokens → components → responsive ladder
 ├── js/
@@ -52,7 +55,7 @@ oteh-miroko-aluminum/
 │   ├── *.jpg              1920w hero + 1200w lightbox-size project images
 │   ├── apple-touch-icon.png
 │   └── logo.png
-├── single-file.html        Generated: whole site in one self-contained file
+├── single-file.html        Generated standalone homepage; supporting pages remain separate
 ├── tools/
 │   ├── make_assets.py      Reproducible image pipeline (resize, compress, tiles)
 │   └── build_single_file.py  Builds single-file.html (inlines CSS/JS/images)
@@ -97,9 +100,9 @@ grotesque) for headings and numerals — it reads like stencilled shop signage �
   `prefers-reduced-motion: reduce`.
 
 ### Deliberate decisions worth flagging to the client
-- **Single page, not multi-page.** For an SME contractor, a single scannable page
-  converts better than five thin pages, and it keeps the whole thing loadable in one
-  HTTP round trip. Sections are anchor-linked and scroll-spied.
+- **Single-page marketing homepage, focused supporting articles.** For an SME contractor,
+  the main services and conversion journey stay on one scannable page. The three Insights
+  previews link to focused static articles, while the main navigation remains anchor-based.
 - **Map is click-to-load.** A Google Maps embed pulls ~700 KB, third-party JS and
   tracking cookies. It's behind a poster + "Load interactive map" button so it costs
   nothing until the visitor wants it.
@@ -217,13 +220,13 @@ Everything brand-related is a token in `css/styles.css` §01:
 
 **Before going live, replace the placeholder content:**
 
-1. **Business details** — search `index.html` for `0803 000 0000`,
+1. **Business details** — confirm the phone number `+234 816 785 9034` in the site and schema,
    `hello@otehmirokoaluminum.com`, the Ikeja address, opening hours, and the
    `LocalBusiness` JSON-LD block (including `aggregateRating`, which must reflect real
    reviews).
-2. **Form endpoint** — `index.html` → `action="https://formspree.io/f/your-endpoint-id"`.
-   See §10. While it still contains `your-endpoint-id`, `js/main.js` detects the
-   placeholder and runs in **demo mode** (simulated success, nothing sent).
+2. **Form destination** — the form is configured for Netlify Forms in `index.html`.
+   Deploy on Netlify to receive submissions; if you use another host, replace the
+   Netlify attributes and set a real endpoint as described in §10.
 3. **Map** — `js/main.js` → `MAP_EMBED_SRC` (Google Maps → Share → Embed a map).
 4. **Photography** — 5 of the 15 images are drawn *technical-drawing placeholder tiles*
    (distinctly labelled `PLACEHOLDER — REPLACE WITH SITE PHOTOGRAPHY`):
@@ -232,36 +235,27 @@ Everything brand-related is a token in `css/styles.css` §01:
    the same dimensions, then run `python3 tools/make_assets.py`.
 5. **Domain** — replace `https://www.otehmirokoaluminum.com/` in `index.html`
    (canonical + OG), `robots.txt` and `sitemap.xml`.
-6. **Blog** — the three cards are styled placeholders pointing at `#blog`. Once real
-   articles exist, move `css/` and `js/` up a level and reuse the header/footer markup;
-   `main.js` fails soft on every module, so it's safe on pages without a gallery or form.
+6. **Insights** — the homepage previews link to three static articles in `insights/`,
+   with a listing at `insights/index.html`. Keep those links and `sitemap.xml` in sync
+   when adding, removing or renaming articles.
 
 ---
 
 ## 10. Making the quote form actually send
 
-The form posts to whatever `action` you give it, via `fetch`, so the visitor never
-leaves the page. Three low-effort options:
+The form currently uses **Netlify Forms** and submits asynchronously with `fetch`, so
+the visitor stays on the page. Netlify must detect the form during deployment; the form
+has `name="quote"`, `data-netlify="true"`, a matching hidden `form-name` field and the
+`company_url` honeypot. Keep `data-demo="false"` when using the live handler.
 
-**Formspree** (no backend)
-```html
-<form action="https://formspree.io/f/abcdwxyz" method="post" enctype="multipart/form-data">
-```
-Create a free form, paste the endpoint. File attachments work on paid plans.
+If you deploy somewhere other than Netlify, replace the Netlify attributes and set a
+real service/API endpoint in the form's `action`. For example, Formspree provides a
+URL such as `https://formspree.io/f/abcdwxyz`; file-upload support depends on the plan.
+A custom endpoint should accept the form's multipart POST and return a successful HTTP
+status. The client displays an error and direct-contact fallback if the request fails.
 
-**Netlify Forms** (if deploying to Netlify)
-```html
-<form name="quote" netlify netlify-honeypot="company_url" ...>
-```
-Netlify detects the form at build time; no endpoint needed. Set `data-demo="false"`.
-
-**Your own endpoint**
-Point `action` at `/api/quote`, keep `method="post"`, and return `200` with a JSON
-body. Any error response shows the visitor a phone-number fallback, so a broken
-endpoint never becomes a dead end.
-
-A hidden honeypot field (`company_url`) silently swallows bot submissions, and the
-client-side file check rejects anything over 5 MB per file before upload.
+The honeypot silently swallows bot submissions. The client also rejects more than
+three attachments, unsupported file types and files over 5 MB each before upload.
 
 ---
 
@@ -280,11 +274,12 @@ generated build:
 python3 tools/build_single_file.py     # → single-file.html (~1 MB)
 ```
 
-It inlines the stylesheet, the script and every image (as base64 data URIs), so the
-file has **zero external dependencies** and renders correctly from any context. Two
-deliberate trade-offs, documented in the script: base64 inflates bytes ~33% (so the
-multi-file version always loads faster), and the lightbox uses 640 px thumbnails
-instead of the 1200 px originals to keep the file emailable.
+It inlines the homepage stylesheet, script and images (as base64 data URIs), so the
+homepage renders without its usual local asset requests. The separate Insights and
+legal pages are not embedded; keep the site folder alongside the file if their links
+need to work. Two deliberate trade-offs: base64 inflates bytes ~33% (so the multi-file
+version always loads faster), and the lightbox uses 640 px thumbnails instead of the
+1200 px originals to keep the file smaller.
 
 `single-file.html` is a build artefact — edit `index.html`, `css/styles.css` or
 `js/main.js` and re-run the script. Never edit it by hand.

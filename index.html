@@ -53,7 +53,7 @@
   "name": "Oteh Miroko Aluminum",
   "description": "Aluminium and glass fabrication, glazing and installation company serving residential, commercial and industrial clients across Nigeria.",
   "url": "https://www.otehmirokoaluminum.com/",
-  "telephone": "+234-803-000-0000",
+  "telephone": "+234-816-785-9034",
   "email": "hello@otehmirokoaluminum.com",
   "image": "https://www.otehmirokoaluminum.com/images/og-cover.jpg",
   "logo": "https://www.otehmirokoaluminum.com/images/logo.png",
@@ -147,11 +147,11 @@
       </ul>
 
       <div class="nav__cta">
-        <a class="btn btn--ghost" href="tel:+2348030000000">
+        <a class="btn btn--ghost" href="tel:+2348167859034">
           <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z" fill="currentColor"/></svg>
-          <span>0803 000 0000</span>
+          <span>0816 785 9034</span>
         </a>
-        <a class="btn btn--primary" href="#contact" data-cta="quote">Request a Quote</a>
+        <a class="btn btn--primary" href="#quote" data-cta="quote">Request a Quote</a>
       </div>
     </nav>
 
@@ -636,12 +636,12 @@
           <h2 class="section__title" id="blogTitle">From the workshop</h2>
           <p class="section__lede">Practical notes on specifying, maintaining and budgeting for aluminium and glass installations.</p>
         </div>
-        <a class="link-arrow" href="#blog">All articles <span aria-hidden="true">→</span></a>
+        <a class="link-arrow" href="insights/index.html">All articles <span aria-hidden="true">→</span></a>
       </header>
 
       <ul class="posts" role="list">
         <li class="post reveal">
-          <a class="post__link" href="#blog">
+          <a class="post__link" href="insights/glass-specification.html">
             <img src="images/blog-glass-types.jpg" alt="Sample squares of clear, tinted and laminated glass stacked on a workshop bench" width="800" height="560" loading="lazy" decoding="async">
             <div class="post__body">
               <p class="post__meta"><time datetime="2026-08-18">18 Aug 2026</time> · <span>Glass specification</span></p>
@@ -653,7 +653,7 @@
         </li>
 
         <li class="post reveal">
-          <a class="post__link" href="#blog">
+          <a class="post__link" href="insights/window-maintenance.html">
             <img src="images/blog-maintenance.jpg" alt="Technician applying silicone sealant along an aluminium window frame during maintenance" width="800" height="560" loading="lazy" decoding="async">
             <div class="post__body">
               <p class="post__meta"><time datetime="2026-07-02">2 Jul 2026</time> · <span>Maintenance</span></p>
@@ -665,12 +665,12 @@
         </li>
 
         <li class="post reveal">
-          <a class="post__link" href="#blog">
+          <a class="post__link" href="insights/window-cost-factors.html">
             <img src="images/blog-cost-factors.jpg" alt="Aluminium profile offcuts and shop drawings on a fabrication table" width="800" height="560" loading="lazy" decoding="async">
             <div class="post__body">
               <p class="post__meta"><time datetime="2026-05-24">24 May 2026</time> · <span>Budgeting</span></p>
               <h3>What actually drives the cost of aluminium windows</h3>
-              <p>Profile series, glazing, finish, quantity and site access — in that order. A breakdown of the five levers, with typical percentage impact on the final bill.</p>
+              <p>Profile series, glazing, finish, quantity and site access — the main factors to compare when reviewing a window quotation.</p>
               <span class="link-arrow">Read more <span aria-hidden="true">→</span></span>
             </div>
           </a>
@@ -682,7 +682,7 @@
   <!-- ============================================================
        9. QUOTE REQUEST FORM
        Client-side validated, with a honeypot field and a
-       file-attachment input. POST target is configurable in js/main.js.
+       file-attachment input. The action is handled by Netlify Forms.
        ============================================================ -->
   <section class="section section--quote" id="quote" aria-labelledby="quoteTitle">
     <div class="container grid-2">
@@ -700,15 +700,17 @@
           <li>Photo upload helps us pre-assess without a first visit.</li>
         </ul>
         <div class="quote-intro__contact">
-          <p><span aria-hidden="true">📞</span> <a href="tel:+2348030000000">0803 000 0000</a></p>
+          <p><span aria-hidden="true">📞</span> <a href="tel:+2348167859034">0816 785 9034</a></p>
           <p><span aria-hidden="true">✉️</span> <a href="mailto:hello@otehmirokoaluminum.com">hello@otehmirokoaluminum.com</a></p>
         </div>
       </div>
 
       <!-- novalidate: we take over validation so errors are announced in a
            summary and styled consistently across browsers. -->
-      <form class="form reveal" id="quoteForm" novalidate
-            action="https://formspree.io/f/your-endpoint-id" method="post" enctype="multipart/form-data">
+      <form class="form reveal" id="quoteForm" name="quote" novalidate
+            action="/" method="post" enctype="multipart/form-data"
+            data-netlify="true" netlify netlify-honeypot="company_url" data-demo="false">
+        <input type="hidden" name="form-name" value="quote">
 
         <p class="sr-only">Fields marked with an asterisk are required. Everything else is optional.</p>
 
@@ -732,7 +734,7 @@
           <div class="field">
             <label for="phone">Phone / WhatsApp <span class="req" aria-hidden="true">*</span></label>
             <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required
-                   placeholder="0803 000 0000" aria-describedby="err-phone" aria-required="true">
+                   placeholder="0816 785 9034" aria-describedby="err-phone" aria-required="true">
             <p class="field__error" id="err-phone" hidden></p>
           </div>
         </div>
@@ -793,7 +795,7 @@
         <div class="field">
           <label for="attachments">Attach photos or drawings <span class="opt">(optional, max 3 files, 5&nbsp;MB each)</span></label>
           <input type="file" id="attachments" name="attachments" multiple
-                 accept="image/*,.pdf,.dwg" aria-describedby="hint-files err-attachments">
+                 accept=".jpg,.jpeg,.png,.pdf,.dwg" aria-describedby="hint-files err-attachments">
           <p class="field__hint" id="hint-files">JPEG, PNG, PDF or DWG. Nothing selected is fine too.</p>
           <p class="field__error" id="err-attachments" hidden></p>
         </div>
@@ -848,8 +850,7 @@
               <span class="contact__ico" aria-hidden="true">📞</span>
               <div>
                 <h3>Phone / WhatsApp</h3>
-                <p><a href="tel:+2348030000000">+234 803 000 0000</a><br>
-                   <a href="tel:+2348120000000">+234 812 000 0000</a></p>
+                <p><a href="tel:+2348167859034">+234 816 785 9034</a></p>
               </div>
             </li>
             <li>
@@ -920,7 +921,7 @@
         commercial and industrial projects across Nigeria. RC 1234567.
       </p>
       <ul class="socials" role="list">
-        <li><a href="https://wa.me/2348030000000" aria-label="Chat with Oteh Miroko Aluminum on WhatsApp">
+        <li><a href="https://wa.me/2348167859034" aria-label="Chat with Oteh Miroko Aluminum on WhatsApp">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.2l-.4-.2-2.9.8.8-2.8-.2-.4A8.2 8.2 0 0 1 12 3.8m-3.1 4c-.2 0-.5.1-.7.3-.3.3-.8.9-.8 1.8s.6 1.9.7 2c.1.2 1.3 2.1 3.3 2.9 1.7.7 2.1.6 2.5.5.5 0 1.4-.5 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.3-1.2-.6c-.2-.1-.3-.1-.5.1l-.6.7c-.1.2-.3.2-.5.1s-.9-.3-1.7-1a6 6 0 0 1-1.1-1.4c-.1-.2 0-.3.1-.4l.4-.5.2-.4v-.4l-.5-1.4q-.2-.3-.5-.3z"/></svg>
         </a></li>
         <li><a href="https://facebook.com" rel="noopener" aria-label="Oteh Miroko Aluminum on Facebook">
@@ -975,8 +976,8 @@
   <div class="container footer__bar">
     <p>© <span id="year">2026</span> Oteh Miroko Aluminum Ltd. All rights reserved.</p>
     <ul role="list">
-      <li><a href="#contact">Privacy</a></li>
-      <li><a href="#contact">Terms</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
       <li><a href="#quote">Get a quote</a></li>
     </ul>
   </div>
@@ -984,7 +985,7 @@
 
 <!-- Floating actions: WhatsApp + back-to-top, revealed after the hero -->
 <div class="floaters">
-  <a class="floater floater--wa" href="https://wa.me/2348030000000" aria-label="Chat on WhatsApp">
+  <a class="floater floater--wa" href="https://wa.me/2348167859034" aria-label="Chat on WhatsApp">
     <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m-3.1 5.8c.2-.2.5-.3.7-.3q.3 0 .5.3l.5 1.4v.4l-.2.4-.4.5c-.1.1-.2.2-.1.4a6 6 0 0 0 1.1 1.4c.8.7 1.5.9 1.7 1s.4 0 .5-.1l.6-.7c.2-.2.3-.2.5-.1l1.2.6.5.3c.1.1.1.5-.1 1.1s-1.1 1-1.6 1.1c-.4 0-.8.2-2.5-.5-2-.8-3.2-2.7-3.3-2.9-.1-.1-.7-.9-.7-2s.5-1.5.8-1.8"/></svg>
   </a>
   <button class="floater floater--top" type="button" id="backToTop" aria-label="Back to top" hidden>

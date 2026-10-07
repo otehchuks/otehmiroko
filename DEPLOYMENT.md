@@ -14,7 +14,7 @@ site.
 
 | # | Task | File |
 |---|---|---|
-| 1 | Replace phone numbers `0803 000 0000` / `+2348030000000` | `index.html`, `js/main.js` |
+| 1 | Confirm the supplied phone/WhatsApp number `+234 816 785 9034` is correct everywhere | `index.html`, `404.html`, `js/main.js` |
 | 2 | Replace `hello@` / `projects@otehmirokoaluminum.com` | `index.html` |
 | 3 | Replace the Ikeja address + opening hours | `index.html` (`#contact`) |
 | 4 | Update `LocalBusiness` JSON-LD: phone, email, geo, `aggregateRating` | `index.html` `<head>` |
@@ -24,6 +24,7 @@ site.
 | 8 | Replace `https://www.otehmirokoaluminum.com/` with the live domain | `index.html`, `robots.txt`, `sitemap.xml` |
 | 9 | Add the platform verification files you need (Search Console, analytics) | root |
 | 10 | Test the form, WhatsApp link and phone links on a real phone | — |
+| 11 | Review the Privacy and Terms drafts; remove `noindex` only after approval | `privacy.html`, `terms.html` |
 
 Verify locally first:
 
@@ -58,9 +59,11 @@ netlify deploy --dir . --prod
 **Custom domain:** Site settings → Domain management → Add domain → follow the DNS
 instructions → Netlify provisions a Let's Encrypt certificate automatically.
 
-**Netlify Forms** (free tier, no backend): add `name="quote" netlify
-netlify-honeypot="company_url"` to the `<form>` and set `data-demo="false"`. Remove the
-`action` attribute. Submissions appear in the Netlify dashboard and can be emailed on.
+**Netlify Forms** (no backend): the quote form in this repo is already configured with
+`name="quote"`, `data-netlify="true"`, a hidden `form-name` value and the
+`company_url` honeypot. It posts to `/` asynchronously; deploy to Netlify so the form is
+picked up during the build. Submissions appear in the Netlify dashboard and can be
+forwarded by email from the site settings.
 
 ---
 
