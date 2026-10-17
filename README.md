@@ -1,8 +1,9 @@
 # Oteh Miroko Aluminum — company website
 
-A fast, accessible static site for an aluminium and glass fabrication contractor:
-windows, doors, glass partitions, curtain walls, balustrades and custom fabrication.
-The marketing homepage is a single page, with separate Insights article pages.
+A fast, accessible static site for an aluminium and glass fabrication contractor in
+Abakaliki, Ebonyi State: casement and sliding windows, aluminium doors, frameless and
+all-glass doors, glass railings, shop and office partitions, curtain walls and custom
+fabrication. The marketing homepage is a single page, with separate Insights pages.
 
 Built as **static HTML, CSS and vanilla JavaScript** — no framework, no build step, no
 runtime dependencies. You can hand the folder to any host and it works.
@@ -19,12 +20,14 @@ Live preview (local dev):   http://localhost:8080
 |---|---|
 | Home / hero with trust metrics | `index.html` → `#home` |
 | About Us | `#about` |
-| Services (7 scoped offerings) | `#services` |
+| Services (7 scoped offerings, matched to the company's actual work) | `#services` |
 | Projects / Portfolio with category filter + lightbox | `#projects` |
+| Vision: workshop film + framed showcase board | `#vision` |
 | Process & differentiators | `#process` |
 | Testimonials (accessible carousel) | `#testimonials` |
 | Blog / Insights (3 linked articles + listing page) | `#blog`, `insights/` |
-| Contact with details + consent-gated embedded map | `#contact` |
+| Contact details (four-card row) | `#contact` |
+| Directions with a lazy-loaded Google Maps embed | `#directions` |
 | Quote request form (validation, file upload, honeypot) | `#quote` |
 | Sticky header, scroll progress, scroll-spy nav | `js/main.js` (modules 02–03) |
 
@@ -52,12 +55,19 @@ oteh-miroko-aluminum/
 │   └── main.js             12 commented modules, IIFE-scoped, zero dependencies
 ├── images/
 │   ├── thumbs/            640w grid thumbnails (what the gallery actually loads)
+│   ├── floor/             Showcase tiles + the workshop film + its poster
 │   ├── *.jpg              1920w hero + 1200w lightbox-size project images
-│   ├── apple-touch-icon.png
-│   └── logo.png
+│   ├── logo.svg / .png    Brand mark, from tools/logo_path.py
+│   ├── favicon.svg/.ico   Browser icon (light/dark aware SVG + legacy .ico)
+│   └── apple-touch-icon.png
 ├── single-file.html        Generated standalone homepage; supporting pages remain separate
 ├── tools/
+│   ├── logo_path.py        The brand mark as vector coordinates (single source)
+│   ├── build_brand_assets.py  Writes the logo/favicon files AND syncs the
+│   │                       inline mark + icon links in every page
 │   ├── make_assets.py      Reproducible image pipeline (resize, compress, tiles)
+│   ├── build_floor.py      Frames the showcase tiles + film poster
+│   ├── build_film.py       Assembles images/floor/workshop-film.mp4 (ffmpeg)
 │   └── build_single_file.py  Builds single-file.html (inlines CSS/JS/images)
 ├── netlify.toml            Security + cache headers for Netlify
 ├── vercel.json             Same for Vercel
@@ -71,16 +81,22 @@ oteh-miroko-aluminum/
 ## 3. Design choices
 
 ### Brand identity
-The brief asked for "silver, blue, white — clean lines, industrial yet sleek". That's
-interpreted as a **deep navy structure with a single bright engineering-blue accent and
-brushed-silver neutrals**, rather than a flat silver/blue wash:
+The palette is taken from the **official company logo** — a solid charcoal mark — so
+the site and the signage read as one brand. That means a near-black ink structure with
+warm-neutral silver surfaces, and exactly one accent (gold) reserved for rating stars:
 
 | Token | Value | Role |
 |---|---|---|
-| `--navy-800` | `#0B1D2E` | Primary dark surface — hero, dark sections, footer |
-| `--blue-600` | `#1B6FBF` | Single action colour: buttons, links, active states |
-| `--blue-500` | `#2E86C1` | Brand mark + dark-surface accents |
-| `--silver-100/300` | `#F4F7FA` / `#D8E0E8` | Page tint and hairline borders |
+| `--ink-800` | `#131315` | Primary dark surface — hero, dark sections, footer |
+| `--ink-700` | `#26262B` | Single action colour: buttons, links, active states |
+| `--ink-500` | `#4D4D55` | Brand mark accents on fine details |
+| `--silver-100/300` | `#F5F6F7` / `#D9DADE` | Page tint and hairline borders |
+
+The mark itself is **vector, not a bitmap**: `tools/logo_path.py` stores the traced
+outline, `tools/build_brand_assets.py` renders every icon from it and rewrites the
+inline `<svg>` in each page, so the header mark, the favicon, the social card and the
+printed logo can never drift apart. (The supplied artwork was 93 × 117 px; the trace
+matches it at IoU 0.96.)
 
 Two type families carry the personality: **Barlow Condensed** (condensed industrial
 grotesque) for headings and numerals — it reads like stencilled shop signage — and
@@ -152,10 +168,10 @@ Implemented, not aspirational:
 
 - **Structure:** one `<h1>`, ordered heading levels, landmark elements
   (`header`, `nav`, `main`, `footer`, `section[aria-labelledby]`), `skip-link`.
-- **Colour:** body text `#5B6B7A` on `#FFFFFF` ≈ 5.6:1; headings and button text far
+- **Colour:** body text `#5C5F66` on `#FFFFFF` ≈ 6.1:1; headings and button text far
   higher. Every link and button is distinguishable without relying on colour alone.
 - **Focus:** a 3 px `:focus-visible` ring on every interactive element, switched to a
-  light blue on dark surfaces so it never disappears.
+  light silver on dark surfaces so it never disappears.
 - **Modals:** the lightbox is a proper `role="dialog" aria-modal="true"` with a focus
   trap, `Esc` to close, arrow/Home/End keys, and focus returned to the thumbnail that
   opened it.
@@ -212,8 +228,8 @@ Everything brand-related is a token in `css/styles.css` §01:
 
 ```css
 :root {
-  --blue-600: #1b6fbf;   /* swap for the client's exact brand blue */
-  --navy-800: #0b1d2e;   /* structural dark */
+  --ink-700: #26262b;    /* action colour */
+  --ink-800: #131315;    /* structural dark */
   --font-display: "Barlow Condensed", ...;
 }
 ```
@@ -221,17 +237,20 @@ Everything brand-related is a token in `css/styles.css` §01:
 **Before going live, replace the placeholder content:**
 
 1. **Business details** — confirm the phone number `+234 816 785 9034` in the site and schema,
-   `hello@otehmirokoaluminum.com`, the Ikeja address, opening hours, and the
+   `hello@` / `projects@otehmirokoaluminum.com`, the head-office address
+   (`13 Bernard Orogwu Street, Abakaliki, Ebonyi State`), opening hours, and the
    `LocalBusiness` JSON-LD block (including `aggregateRating`, which must reflect real
    reviews).
 2. **Form destination** — the form is configured for Netlify Forms in `index.html`.
    Deploy on Netlify to receive submissions; if you use another host, replace the
    Netlify attributes and set a real endpoint as described in §10.
-3. **Map** — `js/main.js` → `MAP_EMBED_SRC` (Google Maps → Share → Embed a map).
+3. **Map** — `index.html` → `#directionsFrame`'s `data-src` (Google Maps → Share →
+   Embed a map). It is injected by `js/main.js` module 12 only when the section nears
+   the viewport.
 4. **Photography** — 5 of the 15 images are drawn *technical-drawing placeholder tiles*
    (distinctly labelled `PLACEHOLDER — REPLACE WITH SITE PHOTOGRAPHY`):
    `project-netting.jpg`, `blog-glass-types.jpg`, `blog-maintenance.jpg`,
-   `blog-cost-factors.jpg`, `map-poster.jpg`. Drop real photos over those filenames at
+   `blog-cost-factors.jpg`. Drop real photos over those filenames at
    the same dimensions, then run `python3 tools/make_assets.py`.
 5. **Domain** — replace `https://www.otehmirokoaluminum.com/` in `index.html`
    (canonical + OG), `robots.txt` and `sitemap.xml`.
@@ -271,7 +290,7 @@ pane, emailing a demo, or showing it on site from a phone or USB stick — there
 generated build:
 
 ```bash
-python3 tools/build_single_file.py     # → single-file.html (~1 MB)
+python3 tools/build_single_file.py     # → single-file.html (~1.5 MB)
 ```
 
 It inlines the homepage stylesheet, script and images (as base64 data URIs), so the
@@ -347,3 +366,31 @@ render everything immediately.
 Code is proprietary — see [LICENSE](LICENSE). The photography in this repository is
 AI-generated/placeholder and carries no third-party licensing obligations; replace it
 with the client's own project photography before launch.
+
+---
+
+## 15. Video and brand tooling
+
+Three small scripts own the things that used to be hand-placed:
+
+```bash
+python3 tools/build_brand_assets.py   # logo.svg, favicon.svg/.ico, logo.png,
+                                     # apple-touch-icon.png — and the inline
+                                     # <svg> mark in every page
+python3 tools/build_floor.py         # framed showcase tiles + film poster
+python3 tools/build_film.py           # images/floor/workshop-film.mp4
+```
+
+`build_brand_assets.py` is idempotent: it strips whatever mark and icon links it finds
+first, so running it twice changes nothing. The page markup it writes is not hand-edited.
+
+**Swapping in the client's own video.** Replace `images/floor/workshop-film.mp4` and
+regenerate the poster (or drop in a frame from the new cut). Keep the file under about
+8 MB, keep it muted (`muted playsinline` is what makes autoplay legal on iOS), and
+update the `<figcaption>` text if the footage is of a specific project. The generated
+film is a stand-in built from the site's own photography; it is silent, captioned in
+type, and deliberately does not name a project it cannot evidence.
+
+**When the client supplies real site photos**, drop them into `images/`, then:
+`python3 tools/make_assets.py` (gallery + hero) and `python3 tools/build_floor.py`
+(showcase tiles), and finally `python3 tools/build_single_file.py`.

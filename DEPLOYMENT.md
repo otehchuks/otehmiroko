@@ -16,12 +16,12 @@ site.
 |---|---|---|
 | 1 | Confirm the supplied phone/WhatsApp number `+234 816 785 9034` is correct everywhere | `index.html`, `404.html`, `js/main.js` |
 | 2 | Replace `hello@` / `projects@otehmirokoaluminum.com` | `index.html` |
-| 3 | Replace the Ikeja address + opening hours | `index.html` (`#contact`) |
+| 3 | Confirm the head-office address (`13 Bernard Orogwu Street, Abakaliki, Ebonyi State`) + opening hours | `index.html` (`#contact`) |
 | 4 | Update `LocalBusiness` JSON-LD: phone, email, geo, `aggregateRating` | `index.html` `<head>` |
 | 5 | Point the quote form at a real endpoint | `index.html` `action="…"` |
-| 6 | Set the real Google Maps embed URL | `js/main.js` `MAP_EMBED_SRC` |
-| 7 | Swap the 5 labelled placeholder tiles for real photos, then re-run the pipeline | `images/`, `tools/make_assets.py` |
-| 8 | Replace `https://www.otehmirokoaluminum.com/` with the live domain | `index.html`, `robots.txt`, `sitemap.xml` |
+| 6 | Set the real Google Maps embed URL | `index.html` `#directionsFrame` `data-src` |
+| 7 | Swap the labelled placeholder tiles + the stand-in film for real photos/footage, then re-run the pipelines (§15 of the README) | `images/`, `tools/` |
+| 8 | Replace `https://www.otehmirokoaluminum.com/` with the live domain | `index.html`, `robots.txt`, `sitemap.xml`, `insights/*` |
 | 9 | Add the platform verification files you need (Search Console, analytics) | root |
 | 10 | Test the form, WhatsApp link and phone links on a real phone | — |
 | 11 | Review the Privacy and Terms drafts; remove `noindex` only after approval | `privacy.html`, `terms.html` |

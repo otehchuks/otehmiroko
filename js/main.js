@@ -736,32 +736,6 @@
   }
 
   /* ==========================================================================
-     10. LAZY MAP LOADER
-     The Google iframe is only injected on demand — keeps third-party JS,
-     cookies and ~700 KB of payload off first paint.
-     ========================================================================== */
-  const loadMapBtn = $('#loadMap');
-  const mapFrame = $('#mapFrame');
-  const mapPoster = $('#mapPoster');
-
-  // Paste the client's real embed URL here (Google Maps → Share → Embed a map)
-  const MAP_EMBED_SRC =
-    'https://www.google.com/maps?q=Ikeja%2C%20Lagos%2C%20Nigeria&output=embed';
-
-  loadMapBtn?.addEventListener('click', () => {
-    if (!mapFrame) return;
-    const iframe = document.createElement('iframe');
-    iframe.src = MAP_EMBED_SRC;
-    iframe.title = 'Map showing the Oteh Miroko Aluminum workshop in Ikeja, Lagos';
-    iframe.loading = 'lazy';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-    iframe.setAttribute('allowfullscreen', '');
-    mapFrame.appendChild(iframe);
-    mapPoster?.remove();
-    showToast('Loading map…', 'info', 1800);
-  });
-
-  /* ==========================================================================
      11. BACK TO TOP + SMOOTH-SCROLL FALLBACK
      ========================================================================== */
   const backToTop = $('#backToTop');
@@ -815,5 +789,36 @@
      ========================================================================== */
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+
+/* ============================================================================
+   MODULE 12 — LAZY MAP EMBED
+   The Google Maps iframe in #directionsFrame is injected only when the
+   section gets close to the viewport, so the page never pays for a
+   third-party frame above the fold.
+   ========================================================================== */
+(function lazyDirections() {
+  const frame = document.getElementById('directionsFrame');
+  if (!frame || !frame.dataset.src) return;
+
+  const inject = () => {
+    if (frame.querySelector('iframe')) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = frame.dataset.src;
+    iframe.title = 'Map showing the Oteh Miroko Aluminum head office in Abakaliki, Ebonyi State';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.setAttribute('allowfullscreen', '');
+    frame.replaceChildren(iframe);
+  };
+
+  if (!('IntersectionObserver' in window)) { inject(); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { inject(); io.disconnect(); }
+    });
+  }, { rootMargin: '600px 0px' });
+  io.observe(frame);
+})();
 
 })();

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92.5 116" role="img" aria-label="Oteh Miroko Aluminum">
+  <style>
+    path { fill: #131315; }
+    @media (prefers-color-scheme: dark) { path { fill: #f5f6f7; } }
+  </style>
+  <path fill="#131315" fill-rule="evenodd" d="M47.5 116 L44.5 115.5 L6.5 95.5 L0.25 95 L0 57 L0.5 55.25 L2.5 53.5 L21.5 41.25 L22 42 L22 95 L22.5 96.25 L27.5 98.5 L28 97 L28.25 30 L30.5 27.75 L43.5 19.5 L44 20 L44.25 105 L45.5 106 L48.5 105.75 L49.25 105 L49.5 0 L62.5 8.75 L63.75 10 L64.5 12 L64.5 98 L65.5 98.5 L70.25 96 L70.5 41.5 L92 55 L92.5 57 L92.5 94 L91.5 95.25 L86.5 95.5 Z"/>
+</svg>
