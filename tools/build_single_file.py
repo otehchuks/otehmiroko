@@ -140,13 +140,18 @@ def main() -> None:
     # already covers as a thumbnail. Embedding both would inline every project
     # photo twice, so the href is dropped: js/main.js falls back to the
     # thumbnail's own src, and role/tabindex keep the control keyboard-operable.
+    # The pattern must match every gallery in the page — portfolio projects and
+    # the product range both use .gallery__link.
     def drop_href(match: re.Match) -> str:
         tag = match.group(0)
-        tag = re.sub(r'href="images/project-[a-z-]+\.jpg"', 'role="button" tabindex="0"', tag)
+        tag = re.sub(r'href="images/(?:project-[a-z-]+|products/[a-z-]+)\.jpg"',
+                     'role="button" tabindex="0"', tag)
         return tag
 
+    # Product cards carry an extra class (`product__frame gallery__link`), so
+    # match the class token rather than the whole attribute value.
     html, n_links = re.subn(
-        r'<a class="gallery__link" href="images/project-[a-z-]+\.jpg"[^>]*>',
+        r'<a class="[^"]*\bgallery__link\b[^"]*"\s+href="images/(?:project-[a-z-]+|products/[a-z-]+)\.jpg"[^>]*>',
         drop_href, html,
     )
     print(f"  lightbox links de-duplicated: {n_links}")

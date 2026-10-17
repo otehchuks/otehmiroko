@@ -10,6 +10,7 @@
    06. Strip / About
    07. Services
    08. Projects gallery
+   08b. Products (filterable range)
    09. Process (dark section)
    10. Testimonials carousel
    11. Blog cards
@@ -353,12 +354,12 @@ a:hover { color: var(--brand); }
 }
 
 /* Desktop nav */
-.nav { display: flex; align-items: center; gap: clamp(var(--space-2), 1.4vw, var(--space-5)); min-width: 0; }
-.nav__list { display: flex; align-items: center; gap: var(--space-1); }
+.nav { display: flex; align-items: center; gap: clamp(var(--space-2), 1vw, var(--space-4)); min-width: 0; }
+.nav__list { display: flex; align-items: center; gap: 2px; }
 .nav__link {
   position: relative;
   display: inline-flex; align-items: center; gap: .35em;
-  padding: .55rem clamp(.4rem, .55vw, .7rem);
+  padding: .5rem clamp(.4rem, .45vw, .6rem);
   white-space: nowrap;
   font-size: var(--fs-sm); font-weight: 600; color: var(--ink-800);
   text-decoration: none; border-radius: var(--radius-sm);
@@ -606,6 +607,67 @@ a:hover { color: var(--brand); }
 .gallery figcaption strong { font-family: var(--font-display); font-size: 1.12rem; }
 .gallery figcaption span { font-size: var(--fs-sm); color: var(--text-muted); }
 .gallery__empty { text-align: center; color: var(--text-muted); padding-block: var(--space-6); }
+
+
+/* =============================================================================
+   08b. PRODUCTS
+   The real range, in the real finishes. Reuses the gallery's filter + lightbox
+   contracts (data-lightbox / .gallery__item), but with portrait-aware cards,
+   because door and window photos are taller than they are wide.
+   ============================================================================= */
+.products__head {
+  display: flex; flex-wrap: wrap; align-items: flex-end;
+  justify-content: space-between; gap: var(--space-5);
+}
+
+.products {
+  display: grid; gap: var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-6);
+}
+@media (min-width: 40em) { .products { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+@media (min-width: 68em) { .products { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.product { transition: opacity 260ms var(--ease), transform 260ms var(--ease); }
+.product[hidden] { display: none; }
+.product.is-fading { opacity: 0; transform: scale(.97); }
+
+.product__frame {
+  position: relative; display: block; overflow: hidden;
+  border-radius: var(--radius); background: var(--silver-200);
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow-1);
+  border: 1px solid var(--silver-300);
+}
+.product__frame img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 620ms var(--ease);
+}
+.product__frame:hover img,
+.product__frame:focus-visible img { transform: scale(1.05); }
+.product__tag {
+  position: absolute; left: var(--space-3); top: var(--space-3);
+  padding: .3em .7em; border-radius: 999px;
+  background: rgba(19, 19, 21, .82); color: var(--white);
+  font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+}
+.product figcaption { display: flex; flex-direction: column; gap: .15rem; padding: var(--space-3) 0 0; }
+.product figcaption strong { font-family: var(--font-display); font-size: 1.06rem; line-height: 1.2; }
+.product figcaption span { font-size: var(--fs-sm); color: var(--text-muted); }
+.products__empty { text-align: center; color: var(--text-muted); padding-block: var(--space-6); }
+
+.product-notes {
+  display: grid; gap: var(--space-4); grid-template-columns: 1fr;
+  margin-top: var(--space-6);
+}
+@media (min-width: 45em) { .product-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.product-note {
+  border: 1px solid var(--silver-300); border-radius: var(--radius);
+  background: var(--white); padding: var(--space-5); box-shadow: var(--shadow-1);
+}
+.product-note h3 { font-size: var(--fs-h4); margin: 0 0 var(--space-2); }
+.product-note p { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.product-note strong { color: var(--text); }
 
 /* =============================================================================
    09. PROCESS (dark)
@@ -1183,12 +1245,30 @@ a:hover { color: var(--brand); }
   .grid-2--wide { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
 }
 
-/* ---- Mobile navigation drawer (< 900px) ----------------------------------- */
-@media (max-width: 56.24em) {
+/* ---- Compact header (1216–1600px) -----------------------------------------
+   Nine nav anchors plus two buttons no longer fit the 1200px container once
+   "Products" joins the list, so in this band the header trims its side
+   padding and the phone button drops to its icon (the number is still in the
+   drawer, the hero, the contact block and the footer). */
+@media (min-width: 76em) and (max-width: 99.99em) {
+  /* Trim the gutters site-wide so the header stays aligned with the page */
+  .container { padding-inline: 24px; }
+  .nav__cta .btn--ghost span { display: none; }
+  .nav__cta .btn--ghost { padding: .55rem .7rem; }
+}
+
+/* ---- Mobile navigation drawer (< 1216px) ----------------------------------
+   Raised from 900px: below this the full link row is wider than the viewport. */
+@media (max-width: 75.99em) {
   .nav-toggle { display: block; }
 
   .nav {
-    position: fixed; inset: var(--header-h) 0 0 auto;
+    /* The header's backdrop-filter makes it the containing block for fixed
+       children, so `bottom: 0` would collapse the drawer to the header's own
+       height. Anchor to the header's top edge and size the drawer explicitly. */
+    position: fixed; top: var(--header-h); right: 0; bottom: auto; left: auto;
+    height: calc(100vh - var(--header-h));
+    height: calc(100dvh - var(--header-h));
     width: min(88vw, 360px);
     background: var(--white);
     border-left: 1px solid var(--silver-300);
@@ -1270,6 +1350,6 @@ a:hover { color: var(--brand); }
   }
   .section--dark h2, .section--dark h3, .section--dark p { color: #000 !important; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
-  .gallery, .board { grid-template-columns: repeat(2, 1fr) !important; }
+  .gallery, .board, .products { grid-template-columns: repeat(2, 1fr) !important; }
   .board__item:nth-child(even) { transform: none !important; }
 }

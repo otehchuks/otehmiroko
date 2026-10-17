@@ -25,6 +25,7 @@ correct MIME types. `python3 -m http.server` also works but cannot seek video.
 | Home / hero with trust metrics | `index.html` → `#home` |
 | About Us | `#about` |
 | Services (7 scoped offerings, matched to the company's actual work) | `#services` |
+| Products / range — 18 real installation photos, filterable, lightbox | `#products` |
 | Projects / Portfolio with category filter + lightbox | `#projects` |
 | Vision: workshop film + framed showcase board | `#vision` |
 | Process & differentiators | `#process` |
@@ -59,6 +60,8 @@ oteh-miroko-aluminum/
 │   └── main.js             12 commented modules, IIFE-scoped, zero dependencies
 ├── images/
 │   ├── thumbs/            640w grid thumbnails (what the gallery actually loads)
+│   ├── products/          18 real installation photos (1200w) + thumbs/ (640w)
+│   ├── products/src/      The original camera files — input for build_products.py
 │   ├── floor/             Showcase tiles + the workshop film + its poster
 │   ├── *.jpg              1920w hero + 1200w lightbox-size project images
 │   ├── logo.svg / .png    Brand mark, from tools/logo_path.py
@@ -72,6 +75,8 @@ oteh-miroko-aluminum/
 │   ├── make_assets.py      Reproducible image pipeline (resize, compress, tiles)
 │   ├── build_floor.py      Frames the showcase tiles + film poster
 │   ├── build_film.py       Assembles images/floor/workshop-film.mp4 (ffmpeg)
+│   ├── build_products.py   Crops the camera watermark, resizes + compresses the
+│   │                       18 product photos and their thumbnails (deterministic)
 │   └── build_single_file.py  Builds single-file.html (inlines CSS/JS/images)
 ├── netlify.toml            Security + cache headers for Netlify
 ├── vercel.json             Same for Vercel
@@ -294,11 +299,12 @@ pane, emailing a demo, or showing it on site from a phone or USB stick — there
 generated build:
 
 ```bash
-python3 tools/build_single_file.py     # → single-file.html (~1.5 MB)
+python3 tools/build_single_file.py     # → single-file.html (~2.4 MB)
 ```
 
 It inlines the homepage stylesheet, script and images (as base64 data URIs), so the
-homepage renders without its usual local asset requests. The separate Insights and
+homepage renders without its usual local asset requests, including the 18 product
+photos at thumbnail resolution. The separate Insights and
 legal pages are not embedded; keep the site folder alongside the file if their links
 need to work. Two deliberate trade-offs: base64 inflates bytes ~33% (so the multi-file
 version always loads faster), and the lightbox uses 640 px thumbnails instead of the

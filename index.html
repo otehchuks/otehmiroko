@@ -137,6 +137,7 @@
             <li><a href="#services">Curtain walls &amp; shopfronts</a></li>
           </ul>
         </li>
+        <li><a class="nav__link" href="#products">Products</a></li>
         <li><a class="nav__link" href="#projects">Projects</a></li>
         <li><a class="nav__link" href="#vision">Vision</a></li>
         <li><a class="nav__link" href="#process">Process</a></li>
@@ -145,7 +146,7 @@
       </ul>
 
       <div class="nav__cta">
-        <a class="btn btn--ghost" href="tel:+2348167859034">
+        <a class="btn btn--ghost" href="tel:+2348167859034" aria-label="Call 0816 785 9034">
           <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z" fill="currentColor"/></svg>
           <span>0816 785 9034</span>
         </a>
@@ -364,6 +365,403 @@
           <a class="btn btn--primary" href="#quote" data-cta="quote">Request a site visit</a>
         </li>
       </ul>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       4b. PRODUCTS / RANGE
+       Real installed work, photographed on site. The filter and the
+       lightbox are the same modules the portfolio uses, so behaviour
+       stays consistent across the page.
+       ============================================================ -->
+  <section class="section" id="products" aria-labelledby="productsTitle">
+    <div class="container">
+      <header class="section__head products__head reveal">
+        <div>
+          <p class="eyebrow">Our range</p>
+          <h2 class="section__title" id="productsTitle">What we fabricate</h2>
+          <p class="section__lede">
+            Windows, doors, railings, structural glazing and ACP cladding —
+            in the finishes you can see here: white, grey and black aluminium,
+            clear, bronze and frosted glass.
+            Everything is measured on site and made in our Abakaliki workshop.
+          </p>
+        </div>
+        <!-- aria-pressed communicates the filter state to assistive tech -->
+        <div class="filters" role="group" aria-label="Filter products by type">
+          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-filter="windows" aria-pressed="false">Windows</button>
+          <button class="filter" type="button" data-filter="doors" aria-pressed="false">Doors</button>
+          <button class="filter" type="button" data-filter="railings" aria-pressed="false">Railings</button>
+          <button class="filter" type="button" data-filter="glazing" aria-pressed="false">Glazing &amp; cladding</button>
+        </div>
+      </header>
+
+      <ul class="products" id="productsGrid" role="list">
+        <li class="product gallery__item reveal" data-category="windows">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/win-white-casement.jpg"
+               data-lightbox
+               data-caption="White casement window — Double-leaf, glazed sashes. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/win-white-casement.jpg"
+                   srcset="images/products/thumbs/win-white-casement.jpg 640w, images/products/win-white-casement.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="White aluminium casement window with two glazed leaves" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Windows</span>
+            </a>
+            <figcaption>
+              <strong>White casement window</strong>
+              <span>Double-leaf, glazed sashes</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="windows">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/win-grey-casement.jpg"
+               data-lightbox
+               data-caption="Grey casement window — Powder-coated, bronze glass. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/win-grey-casement.jpg"
+                   srcset="images/products/thumbs/win-grey-casement.jpg 640w, images/products/win-grey-casement.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Grey powder-coated aluminium casement window reflecting sky" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Windows</span>
+            </a>
+            <figcaption>
+              <strong>Grey casement window</strong>
+              <span>Powder-coated, bronze glass</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="windows">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/win-black-frames.jpg"
+               data-lightbox
+               data-caption="Black-framed units — Ready for installation. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/win-black-frames.jpg"
+                   srcset="images/products/thumbs/win-black-frames.jpg 640w, images/products/win-black-frames.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Stack of black aluminium window frames awaiting installation" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Windows</span>
+            </a>
+            <figcaption>
+              <strong>Black-framed units</strong>
+              <span>Ready for installation</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="windows">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/win-fixed-stack.jpg"
+               data-lightbox
+               data-caption="Fixed light stack — Grey frame, daylight glass. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/win-fixed-stack.jpg"
+                   srcset="images/products/thumbs/win-fixed-stack.jpg 640w, images/products/win-fixed-stack.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Tall grey aluminium framed window panels stacked with protective film" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Windows</span>
+            </a>
+            <figcaption>
+              <strong>Fixed light stack</strong>
+              <span>Grey frame, daylight glass</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="windows">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/win-louvre-tall.jpg"
+               data-lightbox
+               data-caption="Louvre window — Ventilation without rain ingress. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/win-louvre-tall.jpg"
+                   srcset="images/products/thumbs/win-louvre-tall.jpg 640w, images/products/win-louvre-tall.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Tall aluminium louvre window with horizontal blades in a wall opening" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Windows</span>
+            </a>
+            <figcaption>
+              <strong>Louvre window</strong>
+              <span>Ventilation without rain ingress</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="doors">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/door-white-casement.jpg"
+               data-lightbox
+               data-caption="White casement door — Full-height glazed leaves. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/door-white-casement.jpg"
+                   srcset="images/products/thumbs/door-white-casement.jpg 640w, images/products/door-white-casement.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="White aluminium casement door pair with full-height glazing" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Doors</span>
+            </a>
+            <figcaption>
+              <strong>White casement door</strong>
+              <span>Full-height glazed leaves</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="doors">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/door-white-pull.jpg"
+               data-lightbox
+               data-caption="White pull-handle door — Hinged, with long bar handle. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/door-white-pull.jpg"
+                   srcset="images/products/thumbs/door-white-pull.jpg 640w, images/products/door-white-pull.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="White aluminium door with tall bar pull handle and glazed panels" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Doors</span>
+            </a>
+            <figcaption>
+              <strong>White pull-handle door</strong>
+              <span>Hinged, with long bar handle</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="doors">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/door-grey-casement.jpg"
+               data-lightbox
+               data-caption="Grey casement door — Matching hinge set, bar handle. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/door-grey-casement.jpg"
+                   srcset="images/products/thumbs/door-grey-casement.jpg 640w, images/products/door-grey-casement.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Grey aluminium casement door with bar handle and clear glazing" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Doors</span>
+            </a>
+            <figcaption>
+              <strong>Grey casement door</strong>
+              <span>Matching hinge set, bar handle</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="doors">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/door-grey-single.jpg"
+               data-lightbox
+               data-caption="Single grey door — Narrow frame, clear glass. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/door-grey-single.jpg"
+                   srcset="images/products/thumbs/door-grey-single.jpg 640w, images/products/door-grey-single.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Single grey aluminium framed door standing against a wall" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Doors</span>
+            </a>
+            <figcaption>
+              <strong>Single grey door</strong>
+              <span>Narrow frame, clear glass</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="doors">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/door-frosted-panels.jpg"
+               data-lightbox
+               data-caption="Frosted panel doors — Privacy glazing, grey frames. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/door-frosted-panels.jpg"
+                   srcset="images/products/thumbs/door-frosted-panels.jpg 640w, images/products/door-frosted-panels.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Three grey aluminium doors with frosted glass panels" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Doors</span>
+            </a>
+            <figcaption>
+              <strong>Frosted panel doors</strong>
+              <span>Privacy glazing, grey frames</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="railings">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/rail-stair-glass.jpg"
+               data-lightbox
+               data-caption="Stair glass railing — Glass treads, stainless handrail. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/rail-stair-glass.jpg"
+                   srcset="images/products/thumbs/rail-stair-glass.jpg 640w, images/products/rail-stair-glass.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Frameless glass staircase with stainless steel handrail" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Railings</span>
+            </a>
+            <figcaption>
+              <strong>Stair glass railing</strong>
+              <span>Glass treads, stainless handrail</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="railings">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/rail-landing-glass.jpg"
+               data-lightbox
+               data-caption="Landing balustrade — Frameless, spigot-fixed panels. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/rail-landing-glass.jpg"
+                   srcset="images/products/thumbs/rail-landing-glass.jpg 640w, images/products/rail-landing-glass.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Frameless glass balustrade on a staircase landing with spigot fixings" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Railings</span>
+            </a>
+            <figcaption>
+              <strong>Landing balustrade</strong>
+              <span>Frameless, spigot-fixed panels</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="railings">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/rail-stainless-gold.jpg"
+               data-lightbox
+               data-caption="Stainless & gold railing — Ornamental balusters. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/rail-stainless-gold.jpg"
+                   srcset="images/products/thumbs/rail-stainless-gold.jpg 640w, images/products/rail-stainless-gold.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Polished stainless steel staircase railing with gold ornamental balusters" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Railings</span>
+            </a>
+            <figcaption>
+              <strong>Stainless & gold railing</strong>
+              <span>Ornamental balusters</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="railings">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/rail-black-glass.jpg"
+               data-lightbox
+               data-caption="Black glass balusters — Spigot-mounted ovals. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/rail-black-glass.jpg"
+                   srcset="images/products/thumbs/rail-black-glass.jpg 640w, images/products/rail-black-glass.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Black glass oval baluster panels fixed with stainless spigots along a stair" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Railings</span>
+            </a>
+            <figcaption>
+              <strong>Black glass balusters</strong>
+              <span>Spigot-mounted ovals</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="glazing">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/shop-structural-glazing.jpg"
+               data-lightbox
+               data-caption="Structural glazing — Curtain wall, dark profile. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/shop-structural-glazing.jpg"
+                   srcset="images/products/thumbs/shop-structural-glazing.jpg 640w, images/products/shop-structural-glazing.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Large structural glass curtain wall being installed behind bamboo scaffolding" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Glazing</span>
+            </a>
+            <figcaption>
+              <strong>Structural glazing</strong>
+              <span>Curtain wall, dark profile</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="glazing">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/shop-acp-entrance.jpg"
+               data-lightbox
+               data-caption="ACP door surround — Aluminium composite cladding. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/shop-acp-entrance.jpg"
+                   srcset="images/products/thumbs/shop-acp-entrance.jpg 640w, images/products/shop-acp-entrance.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Shop front with white aluminium composite panel cladding around a glazed door" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Cladding</span>
+            </a>
+            <figcaption>
+              <strong>ACP door surround</strong>
+              <span>Aluminium composite cladding</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="glazing">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/clad-acp-door.jpg"
+               data-lightbox
+               data-caption="ACP clad door panel — Composite infill panel. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/clad-acp-door.jpg"
+                   srcset="images/products/thumbs/clad-acp-door.jpg 640w, images/products/clad-acp-door.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Aluminium door leaf with composite panel cladding and protective film" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Cladding</span>
+            </a>
+            <figcaption>
+              <strong>ACP clad door panel</strong>
+              <span>Composite infill panel</span>
+            </figcaption>
+          </figure>
+        </li>
+
+        <li class="product gallery__item reveal" data-category="glazing">
+          <figure>
+            <a class="product__frame gallery__link"
+               href="images/products/glass-shower-panel.jpg"
+               data-lightbox
+               data-caption="Glass shower screen — Frameless panel, chrome fittings. Supplied and installed by Oteh Miroko Aluminum.">
+              <img src="images/products/thumbs/glass-shower-panel.jpg"
+                   srcset="images/products/thumbs/glass-shower-panel.jpg 640w, images/products/glass-shower-panel.jpg 1200w"
+                   sizes="(min-width: 68em) 22vw, (min-width: 40em) 30vw, 45vw"
+                   alt="Frameless glass shower screen with chrome channel and handle in a bathroom" width="640" height="800" loading="lazy" decoding="async">
+              <span class="product__tag">Glass</span>
+            </a>
+            <figcaption>
+              <strong>Glass shower screen</strong>
+              <span>Frameless panel, chrome fittings</span>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+
+      <p class="products__empty" id="productsEmpty" hidden>Nothing in this category yet — try another filter.</p>
+
+      <div class="product-notes reveal">
+        <div class="product-note">
+          <h3>Finishes</h3>
+          <p><strong>Powder-coated or anodised aluminium</strong> in white, grey, black and bronze.
+             Glass in clear, tinted, reflective or frosted, 6&nbsp;mm to 12&nbsp;mm toughened.</p>
+        </div>
+        <div class="product-note">
+          <h3>Made to measure</h3>
+          <p>Nothing here is a stock size. We survey each opening, fabricate to those
+             dimensions, and deliver <strong>7–14 days</strong> after drawings are approved.</p>
+        </div>
+        <div class="product-note">
+          <h3>Also available</h3>
+          <p>Insect netting, louvre blades beyond those shown, mirror and
+             back-painted glass, patch fittings and floor springs — ask for
+             anything you don't see here.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1057,6 +1455,7 @@
       <h2>Company</h2>
       <ul role="list">
         <li><a href="#about">About us</a></li>
+        <li><a href="#products">Products</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#vision">Vision</a></li>
         <li><a href="#process">Our process</a></li>
@@ -1113,7 +1512,7 @@
       <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
     <figure class="lightbox__figure">
-      <img id="lbImage" src="" alt="" width="1600" height="1200" decoding="async">
+      <img id="lbImage" alt="" width="1600" height="1200" decoding="async">
       <figcaption id="lbCaption"></figcaption>
       <p class="lightbox__counter" id="lbCounter" aria-hidden="true"></p>
     </figure>
