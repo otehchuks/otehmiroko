@@ -1,0 +1,8 @@
+# Build caches
+.cache/
+tools/__pycache__/
+__pycache__/
+
+# OS noise
+.DS_Store
+Thumbs.db

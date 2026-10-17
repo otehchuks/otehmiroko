@@ -131,7 +131,7 @@
   const navToggle = $('#navToggle');
 
   function isDrawerMode() {
-    return window.matchMedia('(max-width: 56.24em)').matches;
+    return window.matchMedia('(max-width: 75.99em)').matches;   // keep in sync with the drawer media query
   }
 
   function setDrawer(open) {
@@ -275,41 +275,53 @@
 
   /* ==========================================================================
      06. GALLERY FILTER
+     Wired per grid rather than per page: the portfolio (#gallery) and the
+     product range (#productsGrid) each own a set of .filter buttons and an
+     empty-state message. A grid picks up only the buttons in its own section,
+     so one section's filter can never hide another section's cards.
      ========================================================================== */
-  const gallery = $('#gallery');
-  const filterButtons = $$('.filter');
-  const galleryItems = gallery ? $$('.gallery__item', gallery) : [];
-  const galleryEmpty = $('#galleryEmpty');
+  function wireFilter(sectionSelector, gridSelector, emptySelector) {
+    const section = $(sectionSelector);
+    const grid = $(gridSelector);
+    if (!section || !grid) return;
 
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
+    const buttons = $$('.filter', section);
+    const items = $$('.gallery__item', grid);
+    const empty = $(emptySelector);
 
-      filterButtons.forEach(b => {
-        const active = b === btn;
-        b.classList.toggle('is-active', active);
-        b.setAttribute('aria-pressed', String(active));
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        buttons.forEach(b => {
+          const active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+
+        let shown = 0;
+        items.forEach(item => {
+          const matches = filter === 'all' || item.dataset.category === filter;
+          if (matches) {
+            shown++;
+            item.hidden = false;
+            // Next frame: fade/slide in
+            requestAnimationFrame(() => item.classList.remove('is-fading'));
+          } else {
+            item.classList.add('is-fading');
+            // Wait for the transition before removing from layout
+            setTimeout(() => { if (item.classList.contains('is-fading')) item.hidden = true; },
+              prefersReducedMotion() ? 0 : 240);
+          }
+        });
+
+        if (empty) empty.hidden = shown !== 0;
       });
-
-      let shown = 0;
-      galleryItems.forEach(item => {
-        const matches = filter === 'all' || item.dataset.category === filter;
-        if (matches) {
-          shown++;
-          item.hidden = false;
-          // Next frame: fade/slide in
-          requestAnimationFrame(() => item.classList.remove('is-fading'));
-        } else {
-          item.classList.add('is-fading');
-          // Wait for the transition before removing from layout
-          setTimeout(() => { if (item.classList.contains('is-fading')) item.hidden = true; },
-            prefersReducedMotion() ? 0 : 240);
-        }
-      });
-
-      if (galleryEmpty) galleryEmpty.hidden = shown !== 0;
     });
-  });
+  }
+
+  wireFilter('#projects', '#gallery', '#galleryEmpty');
+  wireFilter('#products', '#productsGrid', '#productsEmpty');
 
   /* ==========================================================================
      07. LIGHTBOX
@@ -326,11 +338,16 @@
   if (lightbox && lbImage && triggers.length) {
     let index = 0;
     let lastFocused = null;
+    // The grid the current viewing session was launched from. Navigation stays
+    // inside it, so stepping past the last product never wanders into the
+    // portfolio (and vice versa).
+    let group = null;
 
     const visibleTriggers = () =>
       triggers.filter(a => {
         const li = a.closest('.gallery__item');
-        return !li || !li.hidden;             // respect the active filter
+        if (li && li.hidden) return false;    // respect the active filter
+        return !group || a.closest('.gallery, .products') === group;
       });
 
     const focusables = () => $$('button, [href], input, [tabindex]:not([tabindex="-1"])', lightbox)
@@ -370,6 +387,7 @@
     }
 
     function open(trigger) {
+      group = trigger.closest('.gallery, .products');
       const list = visibleTriggers();
       index = Math.max(0, list.indexOf(trigger));
       lastFocused = document.activeElement;
@@ -393,7 +411,9 @@
       setTimeout(() => {
         lightbox.hidden = true;
         overlay.hidden = true;
-        lbImage.src = '';
+        // Remove rather than blank the src: src="" makes the browser re-request
+        // the page itself and leaves a broken image in the DOM.
+        lbImage.removeAttribute('src');
       }, 220);
       // Return focus to the thumbnail that opened the viewer (WCAG 2.4.3)
       if (lastFocused instanceof HTMLElement) lastFocused.focus({ preventScroll: true });
@@ -736,32 +756,6 @@
   }
 
   /* ==========================================================================
-     10. LAZY MAP LOADER
-     The Google iframe is only injected on demand — keeps third-party JS,
-     cookies and ~700 KB of payload off first paint.
-     ========================================================================== */
-  const loadMapBtn = $('#loadMap');
-  const mapFrame = $('#mapFrame');
-  const mapPoster = $('#mapPoster');
-
-  // Paste the client's real embed URL here (Google Maps → Share → Embed a map)
-  const MAP_EMBED_SRC =
-    'https://www.google.com/maps?q=Ikeja%2C%20Lagos%2C%20Nigeria&output=embed';
-
-  loadMapBtn?.addEventListener('click', () => {
-    if (!mapFrame) return;
-    const iframe = document.createElement('iframe');
-    iframe.src = MAP_EMBED_SRC;
-    iframe.title = 'Map showing the Oteh Miroko Aluminum workshop in Ikeja, Lagos';
-    iframe.loading = 'lazy';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-    iframe.setAttribute('allowfullscreen', '');
-    mapFrame.appendChild(iframe);
-    mapPoster?.remove();
-    showToast('Loading map…', 'info', 1800);
-  });
-
-  /* ==========================================================================
      11. BACK TO TOP + SMOOTH-SCROLL FALLBACK
      ========================================================================== */
   const backToTop = $('#backToTop');
@@ -815,5 +809,36 @@
      ========================================================================== */
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+
+/* ============================================================================
+   MODULE 12 — LAZY MAP EMBED
+   The Google Maps iframe in #directionsFrame is injected only when the
+   section gets close to the viewport, so the page never pays for a
+   third-party frame above the fold.
+   ========================================================================== */
+(function lazyDirections() {
+  const frame = document.getElementById('directionsFrame');
+  if (!frame || !frame.dataset.src) return;
+
+  const inject = () => {
+    if (frame.querySelector('iframe')) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = frame.dataset.src;
+    iframe.title = 'Map showing the Oteh Miroko Aluminum head office in Abakaliki, Ebonyi State';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.setAttribute('allowfullscreen', '');
+    frame.replaceChildren(iframe);
+  };
+
+  if (!('IntersectionObserver' in window)) { inject(); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { inject(); io.disconnect(); }
+    });
+  }, { rootMargin: '600px 0px' });
+  io.observe(frame);
+})();
 
 })();

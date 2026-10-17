@@ -140,24 +140,52 @@ def main() -> None:
     # already covers as a thumbnail. Embedding both would inline every project
     # photo twice, so the href is dropped: js/main.js falls back to the
     # thumbnail's own src, and role/tabindex keep the control keyboard-operable.
+    # The pattern must match every gallery in the page — portfolio projects and
+    # the product range both use .gallery__link.
     def drop_href(match: re.Match) -> str:
         tag = match.group(0)
-        tag = re.sub(r'href="images/project-[a-z-]+\.jpg"', 'role="button" tabindex="0"', tag)
+        tag = re.sub(r'href="images/(?:project-[a-z-]+|products/[a-z-]+)\.jpg"',
+                     'role="button" tabindex="0"', tag)
         return tag
 
+    # Product cards carry an extra class (`product__frame gallery__link`), so
+    # match the class token rather than the whole attribute value.
     html, n_links = re.subn(
-        r'<a class="gallery__link" href="images/project-[a-z-]+\.jpg"[^>]*>',
+        r'<a class="[^"]*\bgallery__link\b[^"]*"\s+href="images/(?:project-[a-z-]+|products/[a-z-]+)\.jpg"[^>]*>',
         drop_href, html,
     )
     print(f"  lightbox links de-duplicated: {n_links}")
 
     # ---- 5. Inline the remaining direct references --------------------------
+    # The single-file build must render with no siblings on disk, so every icon
+    # link becomes a data URI. favicon.ico is dropped: .svg + .png cover it.
+    html = re.sub(r'[ \t]*<link rel="icon" href="[^"]*favicon\.ico"[^>]*>\n?', "", html)
     for attr in ("apple-touch-icon",):
         html = re.sub(
             rf'(<link rel="{attr}" href=")([^"]+)(")',
             lambda m: m.group(1) + data_uri(m.group(2)) + m.group(3),
             html,
         )
+
+    # Inline every remaining icon-*.svg link (there is one, the main favicon)
+    html = re.sub(
+        r'(<link rel="icon" href=")(images/favicon\.svg)(")',
+        lambda m: m.group(1) + data_uri(m.group(2)) + m.group(3),
+        html,
+    )
+
+    # ---- 5b. Video: inline the poster, keep the film external ----------------
+    # A base64 MP4 would add ~4 MB to a file meant for previewing. The film is
+    # left as a relative path (works when the folder ships alongside) and its
+    # poster frame is inlined so the block still renders standalone.
+    def inline_poster(match: re.Match) -> str:
+        tag = match.group(0)
+        poster = re.search(r'poster="([^"]+)"', tag)
+        if not poster:
+            return tag
+        return tag.replace(poster.group(0), f'poster="{data_uri(poster.group(1))}"')
+
+    html = re.sub(r"<video\b[^>]*>", inline_poster, html)
 
     # ---- 6. Note the build in the source, and write --------------------------
     html = html.replace(
