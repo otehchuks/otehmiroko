@@ -9,8 +9,12 @@ Built as **static HTML, CSS and vanilla JavaScript** — no framework, no build 
 runtime dependencies. You can hand the folder to any host and it works.
 
 ```
-Live preview (local dev):   http://localhost:8080
+Live preview (local dev):   python3 tools/serve.py     ->  http://localhost:8080
 ```
+
+`tools/serve.py` is a preview-only static server: it adds Range requests (so the
+workshop film can be scrubbed), serves `404.html` for unknown paths, and sets
+correct MIME types. `python3 -m http.server` also works but cannot seek video.
 
 ---
 
